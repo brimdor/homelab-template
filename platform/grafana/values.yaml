@@ -1,0 +1,51 @@
+grafana:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - &host grafana.<domain>
+    tls:
+      - secretName: grafana-general-tls
+        hosts:
+          - *host
+  sidecar:
+    dashboards:
+      enabled: true
+      searchNamespace: monitoring-system
+    datasources:
+      enabled: true
+      searchNamespace: monitoring-system
+  envFromSecret: grafana-secrets
+  grafana.ini:
+    server:
+      root_url: https://grafana.<domain>
+    auth.generic_oauth:
+      enabled: true
+      allow_sign_up: true
+      name: Dex
+      client_id: grafana-sso
+      client_secret: $__env{GRAFANA_SSO_CLIENT_SECRET}
+      scopes: openid profile email groups
+      auth_url: https://dex.<domain>/auth
+      token_url: https://dex.<domain>/token
+      api_url: https://dex.<domain>/userinfo
+  alerting:
+    contactpoints.yaml:
+      secret:
+        contactPoints:
+          - name: ntfy
+            receivers:
+              - uid: ntfy-relay
+                type: webhook
+                settings:
+                  url: http://ntfy-relay.ntfy-relay
+                  username: admin
+                  password: $__env{NTFY_RELAY_PASSWORD}
+    policies.yaml:
+      policies:
+        - receiver: ntfy
+          group_by:
+            - grafana_folder
+            - alertname

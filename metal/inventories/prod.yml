@@ -1,0 +1,39 @@
+all:
+  vars:
+    control_plane_endpoint: <control_plane_endoint>
+    load_balancer_ip_pool:
+      - <loadbalancer_ip_range>
+metal:
+  children:
+    masters:
+      hosts:
+        luigi:
+          {
+            ansible_host: 10.0.60.131,
+            mac: "6c:4b:90:60:29:c4",
+            disk: sda,
+            network_interface: eno1,
+          }
+        peach:
+          {
+            ansible_host: 10.0.60.132,
+            mac: "6c:4b:90:5f:8e:43",
+            disk: sda,
+            network_interface: eno1,
+          }
+        toad:
+          {
+            ansible_host: 10.0.60.133,
+            mac: "6c:4b:90:5b:a3:56",
+            disk: sda,
+            network_interface: eno1,
+          }
+    workers:
+      hosts:
+        yoshi:
+          {
+            ansible_host: 10.0.60.134,
+            mac: "6c:4b:90:5b:6e:6d",
+            disk: sda,
+            network_interface: eno1,
+          }

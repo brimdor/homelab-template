@@ -1,0 +1,17 @@
+- name: Create Kubernetes cluster
+  hosts: metal
+  roles:
+    - prerequisites
+    - k3s
+    - automatic_upgrade
+
+- name: Setup Custom Cluster Configurations
+  hosts: metal
+  roles:
+    - nfs_utils
+    - cronjobs
+
+- name: Install Kubernetes addons
+  hosts: localhost
+  roles:
+    - cilium

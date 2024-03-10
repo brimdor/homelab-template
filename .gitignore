@@ -1,0 +1,10 @@
+.venv/
+book/
+.env
+.env_*
+*.iso
+*.log
+*.png
+*.tgz
+*kubeconfig.yaml
+Chart.lock
