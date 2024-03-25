@@ -36,6 +36,11 @@ User - idm_admin
 `argocd app set gitea --repo https://github.com/brimdor/homelab`  
 `argocd app sync gitea`
 
+### Node Restarts Stuck
+`kubectl -n longhorn-system get pods -o wide | grep instance-manager`  
+`kubectl -n longhorn-system delete pod instance-manager<fill in> --force`  
+
+
 ## Backup
 1. `locate backup -> Operation -> Restore Latest Backup`
 2. `Use Previous Name -> Click OK`
