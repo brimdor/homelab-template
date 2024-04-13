@@ -15,7 +15,7 @@ from rich.prompt import Confirm, Prompt
 
 upstream_config = {
     "seed_repo": "<seed_repo>",
-    "branch": "main",
+    "branch": "<branch>",
     "domain": "<domain>",
     "timezone": "<timezone>",
     "terraform_workspace": "<terraform_workspace>",
@@ -72,6 +72,7 @@ def main() -> None:
         replacement=seed_repo,
         paths=[
             "scripts/configure",
+            "apps/homepage/values.yaml",
             "bootstrap",
             "platform"
         ]
